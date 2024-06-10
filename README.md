@@ -1,4 +1,6 @@
-# Parking Management System Frontend
+# Frontend
+
+Parking Management System Frontend
 
 ## Installation
 
