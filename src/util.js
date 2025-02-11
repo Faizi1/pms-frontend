@@ -6,9 +6,11 @@ const util = {
   data() {
     return {
       modes: {
+
         CREATE: 1,
         EDIT: 2,
         VIEW: 3,
+        faiz : 4
       },
       RootOrg: {
         org_id: process.env.VUE_APP_ORG_ID,
