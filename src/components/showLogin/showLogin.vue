@@ -55,7 +55,6 @@ export default {
     ...mapActions({
       login: "appData/login",
       getLoggedInUser: "appData/getLoggedInUser",
-      markedCaseCount: "appData/markedCaseCount",
     }),
     async loginOption(user) {
       try {
@@ -77,29 +76,17 @@ export default {
               icon: "success",
             });
         }
-        
-        // delay before fetching the count
-        setTimeout(async () => {
-            // Fetch count from the backend
-            const response = await this.markedCaseCount({
-              username: this.username,
-            });
-            const count = response.data.count;
-
-            // Notification if markedCaseUsers is true
-            if (count >= 0) {
-              this.$swal({
-                title: "Notification",
-                text: `You have ${count} marked cases`,
-                timer: 2000, 
-                icon: "info", 
-                showConfirmButton: false,
-              });
-            }
-          }, 2000);
       } catch (error) {
-        this.displayError(error);
-      }
+    if (error.response && error.response.status === 401) {
+      this.$swal({
+        title: "Invalid Credentials",
+        text: "Please check your username and password.",
+        icon: "error",
+      });
+    } else {
+      this.displayError(error);
+    }
+  }
     },
   },
   computed: {

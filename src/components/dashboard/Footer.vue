@@ -5,7 +5,7 @@
     >
       <h6 class="mb-0 text-center font-weight-bolder bg-primary text-white">
         COPYRIGHT © {{ new Date().getFullYear() }}
-        <span>PAK ARMY Developed and Maintained by AG's Branch</span>
+        <!-- <span>Developed and Maintained by A</span> -->
       </h6>
     </div>
   </div>

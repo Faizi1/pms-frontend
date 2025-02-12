@@ -100,13 +100,13 @@
             </b-form>
           </validation-observer>
         </b-col>
-        <p
+        <!-- <p
           class="position-absolute px-lg-5 w-100 text-center"
           style="bottom: 0; left: 50%; transform: translateX(-50%)"
         >
           If you have any queries, feel free to contact us at:
           <span class="text-primary">30821</span>
-        </p>
+        </p> -->
       </b-col>
     </b-row>
     <show-login-options :userList="userArray" :username="username" :password="password" />
@@ -158,7 +158,6 @@ export default {
   methods: {
     ...mapActions({
       login: "appData/login",
-      markedCaseCount: "appData/markedCaseCount",
     }),
     async validateForm() {
       const success = await this.$refs.loginFormValidation.validate();
@@ -206,27 +205,6 @@ export default {
           this.$nextTick(() => {
             this.$bvModal.show("Login-options-show");
           });
-        }
-        if (res.status === 200){
-          // delay before fetching the count
-          setTimeout(async () => {
-            // Fetch count from the backend
-            const response = await this.markedCaseCount({
-              username: this.username,
-            });
-            const count = response.data.count;
-
-            // Notification if markedCaseUsers is true
-            if (count >= 0) {
-              this.$swal({
-                title: "Notification",
-                text: `You have ${count} marked cases`,
-                timer: 2000, 
-                icon: "info", 
-                showConfirmButton: false,
-              });
-            }
-          }, 2000);
         }
         } catch (error) {
           console.log("error from login", error);

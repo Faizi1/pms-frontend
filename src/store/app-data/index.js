@@ -817,18 +817,6 @@ export default {
     }
   },
 
-
-  // MarkedCaseCount
-  async markedCaseCount({ commit }, {
-    username,
-  }) {
-    try {
-      const response = await axiosIns.get(`get-marked-case-count/?username=${username}`);
-      return response;
-    } catch (error) {
-      throw new Error('Failed to fetch marked case count');
-    }
-  },
   // get-formation-cases
   async formationCases({ commit }, {
     organization_id,
