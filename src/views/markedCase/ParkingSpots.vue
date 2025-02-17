@@ -12,9 +12,9 @@
               <b-form-input
                 id="token_no"
                 v-model="token_no"
+                placeholder="Token No"
                 @keydown="enterPressHandler"
                 @input="inputHandler"
-                placeholder="Token No"
               />
             </b-form-group>
             <b-row v-if="searchType.value === 2">
@@ -142,7 +142,6 @@
               v-model="searchType"
               :options="searchTypes"
               placeholder="Search Type"
-              @input="inputHandler"
               label="name"
             />
           </b-form-group>
@@ -207,6 +206,12 @@
         <template #cell(president)="row">
           {{ getMembersData(row.item.president_data) }} - {{ getMember(row.item.president_data) }}
         </template>
+        <template #cell(history)="row">
+          {{ getMarkedBy(row.item.history) }}
+        </template>
+        <template #cell(marked_on)="row">
+          {{ getMarkedOn(row.item.history) }}
+        </template>
         <template #cell(noc_data)="row">
           {{ row.item.noc_data ? row.item.noc_data.name : "" }}
         </template>
@@ -245,18 +250,17 @@
       ></b-pagination>
     </b-card>
     <case-detail-modal
-      id="all-case-detail-show-modal"
+      id="mark-case-detail-show-modal"
       :item="item"
+      :allowEdit="allowEdit"
       @modalClosed="onModalClosed"
       @updateInPlaceData="updateInPlaceData"
-      :allowEdit="allowEdit"
       :key="`detail-${caseDetailModalCount}`"
     />
   </div>
 </template>
   
 <script>
-import store from "@/store";
 import { mapActions, mapGetters } from "vuex";
 import CaseDetailModal from "@/components/case/CaseDetailModal.vue";
 import VueSelectPaginated from "@/components/ui/VueSelectPaginated.vue";
@@ -281,9 +285,8 @@ export default {
         { key: "ordered_by", label: "ordered by" },
         { key: "president", label: "President" },
         { key: "noc_data", label: "Nature of Case" },
-        // { key: "findings", label: "findings" },
-        // { key: "recom", label: "recom" },
-        // { key: "verify by", label: "verify by" },
+        { key: "history", label: "Marked By" },
+        { key: "marked_on", label: "Marked On" },
       ],
       currentPage: 1,
       perPage: 0,
@@ -301,49 +304,27 @@ export default {
       ordered_by_armyNo: "",
       remarks: "",
       recom: "",
-      brief: "",
       noc: "",
+      brief: "",
       case_val: null,
       formation: "",
       serviceNo: "",
       searchType: { value: 1, name: "Token No" },
       sortType: { value: " ", name: "Sort With" },
-      filter: {},
       allowEdit: true,
     };
   },
   async mounted() {
-    if (this.getLoggedInUser.role_data.code_name === "su") {
-      this.allowEdit = true;
-    }
-
-    if (store.getters["appData/hasRole"]("ps-1a")) {
-      this.filter.ps_1a = true;
-    } else if (store.getters["appData/hasRole"]("ps-1b")) {
-      this.filter.ps_1b = true;
-    } else if (store.getters["appData/hasRole"]("ps-1c")) {
-      this.filter.ps_1c = true;
-    }
-
-    if (store.getters["appData/hasRole"]("ps-exec")) {
-      this.filter.in_process_status = [
-        this.caseStatus.PROCESSING,
-        this.caseStatus.FINALIZED,
-        this.caseStatus.CLOSED,
-      ];
-    }
-
-    try {
-      await this.fetchPaginatedData();
-    } catch (error) {
-      this.displayError(error);
-    }
+    console.log('hi');
+    
+    await this.fetchPaginatedData();
   },
   methods: {
     ...mapActions({
-      getReservations: "appData/getReservations",
+      getCases: "appData/getCases",
       getPrefixes: "appData/getPrefixes",
       deleteCase: "appData/deleteCase",
+      getParkingSpots: "appData/getParkingSpots",
     }),
     enterPressHandler(e) {
       if (e.code === "Enter" || e.code === "NumpadEnter") this.search();
@@ -491,84 +472,23 @@ export default {
     },
     async fetchPaginatedData() {
       try {
-        const res = await this.getReservations();
+        const res = await this.getParkingSpots();
 
         this.cases = res.data.results;
-        console.log("cases", this.cases);
         this.totalItems = res.data.count;
         this.perPage = res.data.per_page;
       } catch (error) {
         this.displayError(error);
       }
     },
-    async removeCase(item) {
-      this.item = item;
-      try {
-        this.$swal({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Yes, delete it!",
-          customClass: {
-            confirmButton: "btn btn-primary",
-            cancelButton: "btn btn-outline-danger ml-1",
-          },
-          buttonsStyling: false,
-        }).then(async (result) => {
-          if (result.value) {
-            const res = await this.deleteCase({
-              pk: this.item.id,
-            });
-            if (res.status === 204) {
-              this.$swal({
-                icon: "success",
-                title: "Deleted!",
-                text: "Case has been deleted.",
-                customClass: {
-                  confirmButton: "btn btn-success",
-                },
-              });
-              if (
-                (this.totalItems - 1) % this.perPage === 0 &&
-                this.currentPage !== 1
-              ) {
-                this.currentPage -= 1;
-              } else {
-                await this.fetchPaginatedData();
-              }
-            }
-          }
-        });
-      } catch (error) {
-        this.displayError(error);
-      }
-    },
-    detailCase(item) {
-      this.item = item;
-      this.caseDetailModalCount += 1;
-      this.$nextTick(() => {
-        this.$bvModal.show("all-case-detail-show-modal");
-      });
-    },
     async onModalClosed() {
       await this.fetchPaginatedData();
-    },
-
-    async updateInPlaceData() {
-      await this.fetchPaginatedData();
-      this.item = this.cases.find((i) => i.id === this.item.id);
-      this.caseDetailModalCount += 1;
-      this.$nextTick(() => {
-        this.$bvModal.show("all-case-detail-show-modal");
-      });
     },
   },
   computed: {
     ...mapGetters({
       hasPermission: "appData/hasPermission",
       getLoggedInUser: "appData/getLoggedInUser",
-      hasRole: "appData/hasRole",
     }),
   },
   watch: {

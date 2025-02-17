@@ -12,7 +12,7 @@ export const $themeConfig = {
     appName: "PMS",
     appFullName: "Parking Management System", // Will update name in navigation menu (Branding)
     // eslint-disable-next-line global-require
-    appLogoImage: require("@/assets/images/logo/logo.svg"), // Will update logo in navigation menu (Branding)
+    appLogoImage: require("@/assets/images/logo/yes.svg"), // Will update logo in navigation menu (Branding)
     appColor: "#094120",
   },
   layout: {

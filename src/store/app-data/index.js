@@ -39,13 +39,6 @@ export default {
     setNavMenuItems(state) {
       state.navMenuItems = [];
 
-      if (state.user.permissions.hasOwnProperty("dashboard_show")) {
-        state.navMenuItems.push({
-          title: "Dashboard",
-          route: "Dashboard",
-          icon: "HomeIcon",
-        });
-      }
 
       if (state.user.permissions.hasOwnProperty("show_user")) {
         state.navMenuItems.push({
@@ -933,6 +926,18 @@ export default {
   },
   async updateOfficersData({ commit }, { payload, pk }) {
     const res = await axiosIns.patch(`officers-data/${pk}/`, payload);
+    return res;
+  },
+  async getParkingSpots({ commit }) {
+    const res = await axiosIns.get(`parking-spots/`);
+    return res;
+  },
+  async getChargingrequests({ commit }) {
+    const res = await axiosIns.get(`charging-requests/`);
+    return res;
+  },
+  async getReservations({ commit }) {
+    const res = await axiosIns.get(`reservations/`);
     return res;
   },
 

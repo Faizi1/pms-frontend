@@ -142,12 +142,12 @@ const router = new VueRouter({
     {
       path: "/case",
       name: "Case",
-      component: () => import("@/views/case/Case.vue"),
+      component: () => import("@/views/case/ChargingRequests.vue"),
       meta: {
-        pageTitle: "Case",
+        pageTitle: "Charging Request",
         breadcrumb: [
           {
-            text: "Case",
+            text: "Charging Request",
             active: true,
           },
         ],
@@ -158,12 +158,12 @@ const router = new VueRouter({
     {
       path: "/all-cases",
       name: "AllCases",
-      component: () => import("@/views/allCases/AllCases.vue"),
+      component: () => import("@/views/allCases/Reservations.vue"),
       meta: {
-        pageTitle: "All Cases",
+        pageTitle: "Reservations",
         breadcrumb: [
           {
-            text: "All Cases",
+            text: "Reservations",
             active: true,
           },
         ],
@@ -174,12 +174,12 @@ const router = new VueRouter({
     {
       path: "/marked-cases",
       name: "MarkedCases",
-      component: () => import("@/views/markedCase/MarkedCase.vue"),
+      component: () => import("@/views/markedCase/ParkingSpots.vue"),
       meta: {
-        pageTitle: "Marked Cases",
+        pageTitle: "Parking Spots",
         breadcrumb: [
           {
-            text: "Marked Cases",
+            text: "Parking Spots",
             active: true,
           },
         ],

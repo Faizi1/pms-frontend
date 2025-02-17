@@ -52,7 +52,7 @@
                     v-model="username"
                     :state="errors.length > 0 ? false : null"
                     name="username"
-                    placeholder="OAS ID"
+                    placeholder="username"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
@@ -191,7 +191,7 @@ export default {
           });
           if (res.status === 200) {
             if (store.getters["appData/hasPermission"]("dashboard_show")) {
-              this.$router.push({ name: "Dashboard" });
+              this.$router.push({ name: "MarkedCases" });
             } else {
               this.$router.push({ name: "Case" });
             }
@@ -230,7 +230,7 @@ export default {
 
 <style scoped>
 .overlay {
-  background: rgba(9, 65, 32, 0.7) url("~@/assets/images/slider/01.jpg");
+  background: rgba(9, 65, 32, 0.7) url("~@/assets/images/logo/park.jpg");
   background-size: cover;
   position: absolute;
   background-blend-mode: multiply;
