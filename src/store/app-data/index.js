@@ -80,10 +80,17 @@ export default {
           // tagVariant: 'light-success',
         });
       }
+      if (state.user.permissions.hasOwnProperty("show_marked_cases")) {
+        state.navMenuItems.push({
+          title: "Parking Spots",
+          icon: "FileIcon",
+          route: "MarkedCases",
+        });
+      }
 
       if (state.user.permissions.hasOwnProperty("show_case")) {
         state.navMenuItems.push({
-          title: "Create",
+          title: "Charging Requests",
           icon: "FileIcon",
           route: "Case",
         });
@@ -91,19 +98,13 @@ export default {
 
       if (state.user.permissions.hasOwnProperty("show_all_cases")) {
         state.navMenuItems.push({
-          title: "All Cases",
+          title: "Reservations",
           icon: "FileIcon",
           route: "AllCases",
         });
       }
 
-      if (state.user.permissions.hasOwnProperty("show_marked_cases")) {
-        state.navMenuItems.push({
-          title: "Marked Cases",
-          icon: "FileIcon",
-          route: "MarkedCases",
-        });
-      }
+      
 
       if (state.user.permissions.hasOwnProperty("organization_show")) {
         state.navMenuItems.push({
