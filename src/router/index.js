@@ -140,8 +140,8 @@ const router = new VueRouter({
       },
     },
     {
-      path: "/case",
-      name: "Case",
+      path: "/charging-requests",
+      name: "ChargingRequests",
       component: () => import("@/views/case/ChargingRequests.vue"),
       meta: {
         pageTitle: "Charging Request",
@@ -152,12 +152,12 @@ const router = new VueRouter({
           },
         ],
         requiresAuth: true,
-        permission: "show_case",
+        permission: "show_charging_requests",
       },
     },
     {
-      path: "/all-cases",
-      name: "AllCases",
+      path: "/reservation",
+      name: "Reservation",
       component: () => import("@/views/allCases/Reservations.vue"),
       meta: {
         pageTitle: "Reservations",
@@ -168,12 +168,12 @@ const router = new VueRouter({
           },
         ],
         requiresAuth: true,
-        permission: "show_all_cases",
+        permission: "show_reservations",
       },
     },
     {
-      path: "/marked-cases",
-      name: "MarkedCases",
+      path: "/parking-spots",
+      name: "ParkingSpots",
       component: () => import("@/views/markedCase/ParkingSpots.vue"),
       meta: {
         pageTitle: "Parking Spots",
@@ -184,7 +184,7 @@ const router = new VueRouter({
           },
         ],
         requiresAuth: true,
-        permission: "show_marked_cases",
+        permission: "show_parking_spots",
       },
     },
     {

@@ -5,7 +5,7 @@
         <b-col md="7">
           <div v-if="searchType">
             <b-form-group
-              label="OAS ID"
+              label="Username"
               label-for="username"
               class="w-50"
               v-if="searchType.value === 1"
@@ -18,7 +18,7 @@
                 v-model="username"
                 @keydown="enterPressHandler"
                 @input="inputHandler"
-                placeholder="OAS ID"
+                placeholder="Username"
               />
             </b-form-group>
             <b-form-group
@@ -132,17 +132,6 @@
           >
             Edit
           </b-button>
-
-          <b-button
-            variant="danger"
-            pill
-            size="sm"
-            class="mr-1"
-            @click="editParentOrganization(row.item)"
-            v-if="hasPermission('update_user')"
-          >
-            Set Parent Organization
-          </b-button>
         </template>
       </b-table>
       <b-pagination
@@ -182,12 +171,8 @@ export default {
     return {
       fields: [
         { key: "name", label: "Name" },
-        { key: "username", label: "OAS ID" },
-        { key: "svc_number", label: "Svc No" },
-        { key: "rank_name", label: "Rank" },
-        { key: "appointment_name", label: "Appointment" },
+        { key: "username", label: "Username" },
         { key: "role_data", label: "Role" },
-        { key: "organization_data", label: "Organization" },
         { key: "manage", label: "Manage" },
       ],
       currentPage: 1,
@@ -198,10 +183,8 @@ export default {
       editUserModalCount: 0,
       userEditParentOrganiztionModalCount: 0,
       searchTypes: [
-        { value: 1, name: "OAS ID" },
+        { value: 1, name: "Username" },
         { value: 2, name: "Name" },
-        { value: 3, name: "Organization" },
-        { value: 4, name: "Service No" },
       ],
       searchType: null,
       name: "",
@@ -287,13 +270,6 @@ export default {
       });
     },
 
-    editParentOrganization(user) {
-      this.user = user;
-      this.userEditParentOrganiztionModalCount += 1;
-      this.$nextTick(() => {
-        this.$bvModal.show("user-edit-parent-organization-modal");
-      });
-    },
     async onModalClosed() {
       await this.fetchPaginatedData();
     },

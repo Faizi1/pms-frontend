@@ -17,7 +17,7 @@
         <template #button-content>
           <div class="d-sm-flex d-none user-nav">
             <p class="user-name font-weight-bolder mb-0">
-              {{ getLoggedInUser ? `${getLoggedInUser.appointment_name} ${getLoggedInUser.username}` : "" }}
+              {{ getLoggedInUser ? `${getLoggedInUser.username}` : "" }}
             </p>
           </div>
           <b-avatar

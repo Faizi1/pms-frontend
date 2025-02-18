@@ -73,27 +73,27 @@ export default {
           // tagVariant: 'light-success',
         });
       }
-      if (state.user.permissions.hasOwnProperty("show_marked_cases")) {
+      if (state.user.permissions.hasOwnProperty("show_parking_spots")) {
         state.navMenuItems.push({
           title: "Parking Spots",
           icon: "FileIcon",
-          route: "MarkedCases",
+          route: "ParkingSpots",
         });
       }
 
-      if (state.user.permissions.hasOwnProperty("show_case")) {
+      if (state.user.permissions.hasOwnProperty("show_charging_requests")) {
         state.navMenuItems.push({
           title: "Charging Requests",
           icon: "FileIcon",
-          route: "Case",
+          route: "ChargingRequests",
         });
       }
 
-      if (state.user.permissions.hasOwnProperty("show_all_cases")) {
+      if (state.user.permissions.hasOwnProperty("show_reservations")) {
         state.navMenuItems.push({
           title: "Reservations",
           icon: "FileIcon",
-          route: "AllCases",
+          route: "Reservation",
         });
       }
 
@@ -131,7 +131,7 @@ export default {
         });
       }
 
-      // if (state.user.permissions.hasOwnProperty("show_organization")) {
+    // if (state.user.permissions.hasOwnProperty("show_organization")) {
       //   state.navMenuItems.push({
       //     title: "Feedback",
       //     icon: "FileIcon",

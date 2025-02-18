@@ -191,7 +191,7 @@ export default {
           });
           if (res.status === 200) {
             if (store.getters["appData/hasPermission"]("dashboard_show")) {
-              this.$router.push({ name: "MarkedCases" });
+              this.$router.push({ name: "ParkingSpots" });
             } else {
               this.$router.push({ name: "Case" });
             }
