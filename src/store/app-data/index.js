@@ -932,6 +932,10 @@ export default {
     const res = await axiosIns.get(`parking-spots/`);
     return res;
   },
+  async createParkingSpots({ commit }, payload) {
+    const res = await axiosIns.post("parking-spots/", payload);
+    return res;
+  },
   async getChargingrequests({ commit }) {
     const res = await axiosIns.get(`charging-requests/`);
     return res;
