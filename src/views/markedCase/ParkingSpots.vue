@@ -6,7 +6,7 @@
               <b-form-input
                 id="spot_id"
                 v-model="spot_id"
-                placeholder="Token No"
+                placeholder="Parking Spot No"
                 @keydown="enterPressHandler"
                 @input="inputHandler"
               />
@@ -41,6 +41,11 @@
               >
             </b-td>
           </b-tr>
+        </template>
+        <template #cell(created_by_data)="row">
+          {{
+            row.item.created_by_data ? row.item.created_by_data.username : ""
+          }}
         </template>
         <template #cell(manage)="row">
           <b-button
@@ -84,11 +89,11 @@ export default {
     return {
       fields: [
         { key: "manage", label: "Manage" },
-        { key: "spot_id", label: "Spot Id" },
+        { key: "spot_id", label: "Parking Spot No" },
         { key: "is_occupied", label: "Occupied Status" },
         { key: "has_charger", label: "Charger Status" },
         { key: "created_at", label: "Creation date" },
-        { key: "created_by", label: "Created by" },
+        { key: "created_by_data", label: "Created by" },
       ],
       currentPage: 1,
       perPage: 0,

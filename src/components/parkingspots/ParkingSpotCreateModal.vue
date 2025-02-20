@@ -82,7 +82,9 @@
       async submit() {
         try {
           let payload = {
-            spot_id: this.spotNo
+            spot_id: this.spotNo,
+            created_by: this.getLoggedInUser.id,
+            updated_by: this.getLoggedInUser.id,
           }
   
           const res = await this.createParkingSpots(payload);
@@ -106,7 +108,7 @@
       },
     },
     computed: {
-      ...mapGetters({ getLoggedInUser: "appData/getUser" }),
+      ...mapGetters({ getLoggedInUser: "appData/getLoggedInUser" }),
     },
     watch: {
     },  

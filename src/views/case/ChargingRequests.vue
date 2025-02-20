@@ -6,7 +6,7 @@
               <b-form-input
                 id="spot_id"
                 v-model="spot_id"
-                placeholder="Token No"
+                placeholder="Parking Spot No"
                 @keydown="enterPressHandler"
                 @input="inputHandler"
               />
@@ -90,7 +90,7 @@ export default {
         { key: "status", label: "Status" },
         { key: "request_time", label: "Request Time" },
         { key: "created_at", label: "Created At" },
-        { key: "created_by", label: "Created By" },
+        { key: "created_by_data", label: "Created By" },
       ],
       currentPage: 1,
       perPage: 0,
@@ -122,7 +122,7 @@ export default {
     async fetchPaginatedData() {
       try {
         const res = await this.getChargingrequests();
-        this.cases = res.data.results;
+        this.cases = res.data;
         this.totalItems = res.data.count;
         this.perPage = res.data.per_page;
       } catch (error) {
